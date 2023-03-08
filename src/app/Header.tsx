@@ -1,5 +1,6 @@
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import NavLinks from "./NavLinks";
 
 function Header() {
   return (
@@ -9,7 +10,7 @@ function Header() {
         <Link href="/" prefetch={false}>
           <h1 className="font-serif text-4xl text-center ">
             Eye
-            <span className="text-[#553492]">9</span>
+            <span className="text-[#FED440]">9</span>
             {" "}News</h1>
         </Link>
 
@@ -27,6 +28,11 @@ function Header() {
           </button>
         </div>
       </div>
+        <NavLinks />
+
+
+        {/* Search Box */}
+
     </header>
   );
 }
