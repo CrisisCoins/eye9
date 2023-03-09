@@ -15,9 +15,10 @@ export default function RootLayout({
     <html lang="en">
       <head/>
 
-      <body>
+      {/* dark:bg-zinc-700 */}
+      <body className='bg-[#EAEBE4] transition-all duration-700'>
         <Header />
-        <div>{children}</div>
+        <div className='max-w-6xl mx-auto'>{children}</div>
         </body>
     </html>
   )
