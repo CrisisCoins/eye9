@@ -1,5 +1,3 @@
-
-
 type Article = {
     author: string | null;
     category: string;
@@ -22,8 +20,8 @@ type Pagination = {
 
 
 type NewsResponse = {
+    data: [Article];    
     pagination: Pagination;
-    data: [Article];
 };
 
 type Category = 
