@@ -1,11 +1,24 @@
+import { gql } from "graphql-request";
+import sortNewsByImage from "./sortNewsByImage";
+
 const fetchNews = async (
   category?: Category | string,
   keywords?: string,
   isDynamic?: boolean
 ) => {
-  const GET_QUERY = gql`
-  query MyQuery {
-    myQuery(access_key: "abc") {
+  const query = gql`
+  query MyQuery(
+    $access_key: String!
+    $categories: String!
+    $keywords: String
+  ) {
+    myQuery(
+      access_key: $access_key
+      categories: $categories
+      countries: "us, il, gb"
+      sort: "published_desc"
+      keywords: $keywords
+    ) {
       data {
         author
         category
@@ -26,17 +39,43 @@ const fetchNews = async (
       }
     }
   }
-}
-`;
+}`;
+
+  const res = await fetch(
+    "https://sidizouine.stepzen.net/api/sad-wolf/__graphql",
+    {
+      method: "POST",
+      cache: isDynamic ? "no-cache" : "default",
+      next: isDynamic ? { revalidate: 0 } : { revalidate: 20 },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `APIkey ${process.env.STEPZEN_API_KEY}`,
+      },
+      body: JSON.stringify({
+        query,
+        variables: {
+          access_key: process.env.MEDIASTACK_API_KEY,
+          categories: category,
+          keywords: keywords,
+        },
+      }),
+    }
+  );
 
 
+console.log(
+  "Loading New Data from API for category >>>",
+  category,
+  keywords
+);
 
 
+const newsResponse = await res.json();
 
+const news = sortNewsByImage(newsResponse.data.myQuery);
 
+return news;
 
-
+};
 
 export default fetchNews;
-
-
