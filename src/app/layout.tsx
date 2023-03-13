@@ -1,5 +1,6 @@
 import './globals.css'
 import Header from './Header'
+import Providers from './Providers'
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,13 +13,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <head/>
-
+    <html>
+        <Providers>
       <body className='bg-[#EAEBE4] dark:bg-zinc-700 transition-all duration-700'>
         <Header />
         <div className='max-w-6xl mx-auto'>{children}</div>
         </body>
+        </Providers>
     </html>
-  )
+  );
 }
