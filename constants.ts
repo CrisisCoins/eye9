@@ -5,7 +5,5 @@ export const categories: Category[] = [
     "health",
     "science",
     "sports",
-    "technology",
-    "blockchain",
-    "cryptocurrency",
+    "technology"
 ];

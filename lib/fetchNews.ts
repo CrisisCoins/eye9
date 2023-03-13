@@ -9,16 +9,16 @@ const fetchNews = async (
   const query = gql`
   query MyQuery(
     $access_key: String!
-    $categories: String!
+    $category: String
     $keywords: String
   ) {
     myQuery(
       access_key: $access_key
-      categories: $categories
-      countries: "us, il, gb"
+      categories: $category
+      countries: "gb, il, us, jp"
       sort: "published_desc"
       keywords: $keywords
-    ) {
+      ) {
       data {
         author
         category
@@ -32,14 +32,14 @@ const fetchNews = async (
         url
       }
       pagination {
-        count
-        limit
-        offset
         total
+        offset
+        limit
+        count
       }
     }
   }
-}`;
+`;
 
   const res = await fetch(
     "https://sidizouine.stepzen.net/api/sad-wolf/__graphql",
@@ -49,7 +49,7 @@ const fetchNews = async (
       next: isDynamic ? { revalidate: 0 } : { revalidate: 20 },
       headers: {
         "Content-Type": "application/json",
-        Authorization: `APIkey ${process.env.STEPZEN_API_KEY}`,
+        Authorization: `ApiKey ${process.env.STEPZEN_API_KEY}`,
       },
       body: JSON.stringify({
         query,
@@ -62,20 +62,17 @@ const fetchNews = async (
     }
   );
 
+  console.log(
+    "LOADING NEW DATA FROM API for category >>> ",
+    category,
+    keywords
+  );
 
-console.log(
-  "Loading New Data from API for category >>>",
-  category,
-  keywords
-);
+const newsResponse = await res.json(); 
 
-
-const newsResponse = await res.json();
-
-const news = sortNewsByImage(newsResponse.data.myQuery);
-
-return news;
-
+ const news = sortNewsByImage(newsResponse.data.myQuery);
+ 
+ return news;
 };
 
 export default fetchNews;
