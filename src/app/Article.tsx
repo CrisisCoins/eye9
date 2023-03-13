@@ -4,7 +4,9 @@ type Props = {
 
 function Article({ article }: Props) {
   return (
-    <article>
+    <article className='bg-slate-100 dark:bg-slate-800 flex flex-col
+    rounded-lg shadow-sm hover:scale-105 hover:shadow-lg
+    hover:bg-slate-200 transition-all duration-200 ease-out'>
       {article.image && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -21,7 +23,12 @@ function Article({ article }: Props) {
               {article.description}
             </p>
           </section>
+          <footer>
+            <p>{article.source} -</p>
+            <p>{article.published_at}</p>
+          </footer>
         </div>
+        {/* Read More */}
       </div>
     </article>
   );
